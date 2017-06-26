@@ -1,20 +1,19 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
     <ul>
-      <li>
-        <router-link to="/timeline">Timeline</router-link>
+      <li v-for="tweet in tweets">
+        {{ tweet }}
       </li>
-     </ul>
+    </ul>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'hello',
+  name: 'timeline',
   data () {
     return {
-      msg: 'Bienvenue sur Twitter'
+      tweets: ['tweet1', 'tweet2', 'tweet3']
     }
   }
 }
@@ -32,7 +31,7 @@ ul {
 }
 
 li {
-  display: inline-block;
+  display: block;
   margin: 0 10px;
 }
 
