@@ -1,18 +1,25 @@
 <template>
   <div class="hello">
+    <select @change="onChange($event.target.value)">
+    <option disabled value="">Choisissez un utilisateur ...</option>
+    <option v-for="utilisateur in utilisateurs" :value="utilisateur.handle">
+     {{ utilisateur.prenom }} {{ utilisateur.nom }}
+    </option>
+    </select>
      <feed :tweets="tweets" :loading="loading" @retweeted="retweet"/>
   </div>
 </template>
 
 <script>
 import Feed from './Feed'
+import Utilisateur from './Utilisateur'
 import Vue from 'vue'
 import Resource from 'vue-resource'
 Vue.use(Resource)
 
 export default {
   name: 'timeline',
-  components: {Feed},
+  components: {Feed, Utilisateur},
   data () {
     return {
       tweets: [],
@@ -32,11 +39,20 @@ export default {
       response => {
         // error callback
       })
+    },
+    fetchUtilisateurs: function () {
+      this.$http.get('http://localhost:8080/utilisateurs').then(response => {
+        this.utilisateurs = response.body
+      },
+      response => {
+        // error callback
+      })
     }
   },
 
   created: function () {
     this.fetchTweets()
+    this.fetchUtilisateurs()
   }
 }
 
