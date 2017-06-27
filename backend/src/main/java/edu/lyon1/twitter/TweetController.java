@@ -47,7 +47,7 @@ public class TweetController {
     @RequestMapping("/retweet")
     public ResponseEntity retweet(@RequestParam("utilisateur") String utilisateur, @RequestParam("tweet") Integer id) {
         Tweet tweet = tweetRepository.findOne(id);
-        if (tweet.getAuteur().equals(utilisateur)) {
+        if (tweet.getAuteur().getHandle().equals(utilisateur)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         tweet.getRetweeters().add(utilisateurRepository.findOne(utilisateur));

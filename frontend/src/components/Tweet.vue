@@ -12,9 +12,11 @@
             <li class="button">
               <icon name="reply"/>
             </li>
-            <li class="button">
-              <icon name="retweet"/>{{tweet.retweeters.length}}
-            </li>
+            <a @click="retweet()">
+              <li class="button">
+                <icon name="retweet"/> {{tweet.retweeters.length}}
+              </li>
+             </a>
             <li class="button">
               <icon name="heart"/>
             </li>
@@ -30,6 +32,9 @@
 import 'vue-awesome/icons'
 import moment from 'moment'
 import Icon from 'vue-awesome/components/Icon'
+import Vue from 'vue'
+import Resource from 'vue-resource'
+Vue.use(Resource)
 
 export default {
   created: function () {
@@ -41,6 +46,14 @@ export default {
   methods: {
     moment: function (date) {
       return moment(date)
+    },
+    retweet: function () {
+      this.$http.get('http://localhost:8080/retweet', {params: {utilisateur: 'johndoe', tweet: this.tweet.id}, responseType: 'text'}).then(response => {
+
+      },
+      response => {
+        // error callback
+      })
     }
   }
 }
