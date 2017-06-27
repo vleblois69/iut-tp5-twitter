@@ -9,9 +9,27 @@
 </template>
 
 <script>
+import Tweet from './Tweet'
+
 export default {
   name: 'feed',
-  props: ['tweet']
+  components: {Tweet},
+  props: ['tweets']
 }
 </script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: block;
+  margin: 0 10px;
+}
+
+</style>
 
