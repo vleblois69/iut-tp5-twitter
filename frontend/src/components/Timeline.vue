@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-     <feed :tweets="tweets"/>
+     <feed :tweets="tweets" :loading="loading"/>
   </div>
 </template>
 
@@ -15,13 +15,15 @@ export default {
   components: {Feed},
   data () {
     return {
-      tweets: [{auteur: 'bob'}]
+      tweets: [],
+      loading: true
     }
   },
   methods: {
     fetchTweets: function () {
       this.$http.get('http://localhost:8080/list').then(response => {
         this.tweets = response.body
+        this.loading = false
       },
       response => {
         // error callback
