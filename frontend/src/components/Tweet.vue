@@ -12,11 +12,12 @@
             <li class="button">
               <icon name="reply"/>
             </li>
-            <a @click="retweet()">
-              <li class="button">
+            <li class="button">
+              <a @click="retweet()" v-if="isRetweetable()">
                 <icon name="retweet"/> {{tweet.retweeters.length}}
-              </li>
-             </a>
+              </a>
+              <icon name="retweet" v-else/> {{tweet.retweeters.length}}
+            </li>
             <li class="button">
               <icon name="heart"/>
             </li>
@@ -55,6 +56,15 @@ export default {
       response => {
         // error callback
       })
+    },
+    isRetweetable: function () {
+      var currentUserIsAutor = this.currentUser === this.tweet.auteur.handle
+      if (currentUserIsAutor) {
+        return false
+      } else {
+        var userHasAlreadyRetweet = (this.tweet.retweeters.find(utilisateur => utilisateur.handle === this.currentUser) === undefined)
+        return (userHasAlreadyRetweet)
+      }
     }
   }
 }
