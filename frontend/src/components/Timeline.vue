@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
-    <utilisateurs :utilisateurs="utilisateurs" @userSelected="changeUser"/>
+    <utilisateurs :utilisateurs="utilisateurs" @userSelected="changeUser"/><br>
+    <postTweet />
     <feed :tweets="tweets" :loading="loading" :currentUser="currentUser" @retweeted="retweet"/>
   </div>
 </template>
@@ -8,13 +9,14 @@
 <script>
 import Feed from './Feed'
 import Utilisateurs from './Utilisateurs'
+import PostTweet from './PostTweet'
 import Vue from 'vue'
 import Resource from 'vue-resource'
 Vue.use(Resource)
 
 export default {
   name: 'timeline',
-  components: {Feed, Utilisateurs},
+  components: {Feed, Utilisateurs, PostTweet},
   data () {
     return {
       tweets: [],
