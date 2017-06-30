@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <utilisateurs :utilisateurs="utilisateurs" @userSelected="changeUser"/><br>
-    <postTweet />
+    <postTweet @tweetCreated="createTweet"/>
     <feed :tweets="tweets" :loading="loading" :currentUser="currentUser" @retweeted="retweet"/>
   </div>
 </template>
@@ -22,7 +22,8 @@ export default {
       tweets: [],
       utilisateurs: [],
       loading: true,
-      currentUser: null
+      currentUser: null,
+      messageTweet: ''
     }
   },
   methods: {
@@ -49,6 +50,18 @@ export default {
     },
     changeUser: function (handle) {
       this.currentUser = handle
+    },
+    createTweet: function (message) {
+      this.$http.get('http://localhost:8080/tweet', {params: {auteur: this.currentUser.handle, contenu: message}}).then(response => {
+        var createdTweet = response.body
+        createdTweet.date = Date.now()
+        createdTweet.retweeters = []
+        console.log(createdTweet)
+        this.tweets.push(createdTweet)
+      },
+      response => {
+        // error callback
+      })
     }
   },
 

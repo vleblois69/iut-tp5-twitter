@@ -16,7 +16,8 @@ export default {
   props: ['utilisateurs'],
   methods: {
     onChange: function (handle) {
-      this.$emit('userSelected', handle)
+      var utilisateur = this.utilisateurs.find(utilisateur => utilisateur.handle === handle)
+      this.$emit('userSelected', utilisateur)
     }
   }
 }
