@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
-    <utilisateurs :utilisateurs="utilisateurs"/>
-    <feed :tweets="tweets" :loading="loading" @retweeted="retweet"/>
+    <utilisateurs :utilisateurs="utilisateurs" @userSelected="changeUser"/>
+    <feed :tweets="tweets" :loading="loading" :currentUser="currentUser" @retweeted="retweet"/>
   </div>
 </template>
 
@@ -19,13 +19,14 @@ export default {
     return {
       tweets: [],
       utilisateurs: [],
-      loading: true
+      loading: true,
+      currentUser: null
     }
   },
   methods: {
     retweet: function (id) {
       var tweet = this.tweets.find(tweet => tweet.id === id)
-      tweet.retweeters.push({handle: 'ladygaga'})
+      tweet.retweeters.push({handle: this.selectedUser})
     },
     fetchTweets: function () {
       this.$http.get('http://localhost:8080/list').then(response => {
@@ -43,6 +44,9 @@ export default {
       response => {
         // error callback
       })
+    },
+    changeUser: function (handle) {
+      this.currentUser = handle
     }
   },
 

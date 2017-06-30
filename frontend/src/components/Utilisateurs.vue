@@ -13,6 +13,11 @@
 
 export default {
   name: 'utilisateurs',
-  props: ['utilisateurs']
+  props: ['utilisateurs'],
+  methods: {
+    onChange: function (handle) {
+      this.$emit('userSelected', handle)
+    }
+  }
 }
 </script>
